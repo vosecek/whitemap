@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ApplicationRef, Component} from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
 import {GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent, Marker, MarkerOptions} from "@ionic-native/google-maps";
 
@@ -11,12 +11,17 @@ export class HomePage {
   private mapOptions: GoogleMapOptions;
   private map: GoogleMap;
 
-  constructor(public navCtrl: NavController, private platform: Platform) {
+  constructor(public navCtrl: NavController, private platform: Platform, private appRef: ApplicationRef) {
     this.createMap();
   }
 
   ionViewDidEnter(): void {
-    if(this.map)  this.map.setVisible(true);
+    if (this.map) {
+      setTimeout(() => {
+        this.map.setVisible(true);
+        this.appRef.tick();
+      }, 100);
+    }
   }
 
   private createMap(): void {
